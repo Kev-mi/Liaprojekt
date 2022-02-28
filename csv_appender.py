@@ -15,19 +15,19 @@ def operation_result():
     first_input = request.form["Length"]
     second_input = request.form["Height"]
     third_input = request.form["Width"]
+    price_input = request.form["Price"]
     try:
-        input1, input2, input3 = float(first_input), float(second_input), float(third_input)
+        input1, input2, input3, price = float(first_input), float(second_input), float(third_input), float(price_input)
         volume = input1 * input2 * input3
-        dimensions = [input1, input2, input3]
-
+        dimensions = [input1, input2, input3, price_input]
         def csv_appender(dimensions):
             with open('dimensions.csv', 'a+', newline='') as write_obj:
                 csv_writer = writer(write_obj)
                 csv_writer.writerow(dimensions)
         csv_appender(dimensions)
-        return render_template('index.html', input1=input1, input2=input2, input3=input3, volume=volume, input_success=True)
+        return render_template('index.html', input1=input1, input2=input2, input3=input3, price=price, volume=volume, input_success=True)
     except volume == 0:
-        return render_template('index.html', input1=input1, input2=input2, input3=input3, volume=volume, result="Bad Input", input_success=False, error_message="volume can't be zero")
+        return render_template('index.html', input1=input1, input2=input2, input3=input3, price=price, volume=volume, result="Bad Input", input_success=False, error_message="volume can't be zero")
 
 
 if __name__ == '__main__':
