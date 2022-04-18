@@ -4,6 +4,14 @@ from sklearn import linear_model
 from csv import writer
 from datetime import datetime
 import plotly.express as px
+from scipy.stats import pearsonr
+
+
+def duplicate_remover(df_duplicate):
+    duplicate_bool = list(df_duplicate[["Length", "Height", "Width", "Price"]].duplicated())
+    for x in range(0, len(duplicate_bool)):
+        if duplicate_bool[x] == True:
+            df_duplicate = df_duplicate.drop(x)
 
 
 def csv_append(file_name, list_of_elem):
@@ -44,12 +52,18 @@ def predict_menu(df):
             st.write("price is " + str(predicted_price[0]) + "kr")
 
 
-def result_menu():
-    print("")
+def result_menu(df):
+    button = st.sidebar.button("Delete duplicates")
+    st.write(df)
+    if button:
+        duplicate_remover(df)
 
 
 def correlation_menu(df):
-    plot = px.scatter(data_frame=df, x=df["Length"], y="Price", trendline="ols")
+    x_var = st.sidebar.selectbox('select what you want to see correlation with price', ('Length', 'Height', 'Width'))
+    plot = px.scatter(data_frame=df, x=df[x_var], y="Price", trendline="ols")
+    corr, _ = pearsonr(df[x_var], df["Price"])
+    st.write(str(corr)[0:5])
     st.plotly_chart(plot)
 
 
@@ -61,7 +75,7 @@ def main():
     elif option == "Predict":
         predict_menu(df_train)
     elif option == "Show results":
-        result_menu()
+        result_menu(df_train)
     elif option == "Show correlation":
         correlation_menu(df_train)
 
