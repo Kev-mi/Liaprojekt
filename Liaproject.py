@@ -5,6 +5,17 @@ from csv import writer
 from datetime import datetime
 import plotly.express as px
 from scipy.stats import pearsonr
+import datetime as dt
+import numpy as np
+
+
+def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_filter, year_filter):
+    a = df_f[df_f['Date'].dt.year == int(year_filter)]
+    b = df_f[df_f['Length'].between(Length_filter[0], Length_filter[1])]
+    c = df_f[df_f['Height'].between(Height_filter[0], Height_filter[1])]
+    d = df_f[df_f['Width'].between(Width_filter[0], Width_filter[1])]
+    e = df_f[df_f['Price'].between(Price_filter[0], Price_filter[1])]
+    return a[(a.isin(b)) & (a.isin(c)) & (a.isin(d)) & (a.isin(e))].dropna()
 
 
 def duplicate_remover(df_duplicate):
@@ -12,6 +23,7 @@ def duplicate_remover(df_duplicate):
     for x in range(0, len(duplicate_bool)):
         if duplicate_bool[x] == True:
             df_duplicate = df_duplicate.drop(x)
+    df_duplicate.to_csv('Predict.csv', index=False)
 
 
 def csv_append(file_name, list_of_elem):
@@ -53,7 +65,19 @@ def predict_menu(df):
 
 
 def result_menu(df):
+    year_list = []
     button = st.sidebar.button("Delete duplicates")
+    st.write(df)
+    Length_slider = st.sidebar.slider("Select length range", value=[int(df["Length"].min()), int(df["Length"].max())])
+    Height_slider = st.sidebar.slider("Select height range", value=[int(df["Height"].min()), int(df["Height"].max())])
+    Width_slider = st.sidebar.slider("Select width range", value=[int(df["Width"].min()), int(df["Width"].max())])
+    Price_slider = st.sidebar.slider("Select price range", value=[int(df["Price"].min()), int(df["Price"].max())])
+    for x in df.index:
+        year_list.append(str(df["Date"][x])[:4])
+    year_list = set(year_list)
+    selected_year = st.sidebar.selectbox("Select year", year_list)
+    df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
+    df = df_filter_function(df, Length_slider, Height_slider, Width_slider, Price_slider, selected_year)
     st.write(df)
     if button:
         duplicate_remover(df)
