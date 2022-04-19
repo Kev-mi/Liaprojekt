@@ -55,13 +55,16 @@ def predict_menu(df):
         Height_pred = st.text_input("Height")
         Length_pred = st.text_input("Length")
         submitted = st.form_submit_button("Predict price")
+        font_size = st.sidebar.slider("Enter text size", 10, 100, value=25)
         if submitted:
             X = df[['Width', 'Height', 'Length']]
             y = df['Price']
             regr = linear_model.LinearRegression()
             regr.fit(X, y)
             predicted_price = regr.predict([[Width_pred, Height_pred, Length_pred]])
-            st.write("price is " + str(predicted_price[0]) + "kr")
+            string_output = "price is " + str(predicted_price[0]) + "kr"
+            html_str = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output}</p> """
+            st.markdown(html_str, unsafe_allow_html=True)
 
 
 def result_menu(df):
