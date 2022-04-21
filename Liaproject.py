@@ -23,7 +23,7 @@ def duplicate_remover(df_duplicate):
     for x in range(0, len(duplicate_bool)):
         if duplicate_bool[x] == True:
             df_duplicate = df_duplicate.drop(x)
-    df_duplicate.to_csv('Predict.csv', index=False)
+    df_duplicate.to_csv('Train.csv', index=False)
 
 
 def csv_append(file_name, list_of_elem):
@@ -45,20 +45,25 @@ def append_menu():
             if Date == "":
                 Date = datetime.date(datetime.now())
             row_contents = [Length, Height, Width, Price, Date]
-            csv_append('Predict.csv', row_contents)
+            csv_append('Train.csv', row_contents)
 
 
 def predict_menu(df):
     with st.form("my_form"):
         st.write("Fan info")
+        train_year = st.sidebar.selectbox("Select year to use data from", sorted(set(pd.DatetimeIndex(df['Date']).year)))
+        train_month = st.sidebar.selectbox("Select month to use data from",sorted(set(pd.DatetimeIndex(df['Date']).month)))
+        df_year = df[pd.DatetimeIndex(df['Date']).year == train_year]
+        df_month = df[pd.DatetimeIndex(df['Date']).month == train_month]
+        df_pred = df_year[(df_year.isin(df_month))].dropna()
         Width_pred = st.text_input("Width")
         Height_pred = st.text_input("Height")
         Length_pred = st.text_input("Length")
         submitted = st.form_submit_button("Predict price")
         font_size = st.sidebar.slider("Enter text size", 10, 100, value=25)
         if submitted:
-            X = df[['Width', 'Height', 'Length']]
-            y = df['Price']
+            X = df_pred[['Width', 'Height', 'Length']]
+            y = df_pred['Price']
             regr = linear_model.LinearRegression()
             regr.fit(X, y)
             predicted_price = regr.predict([[Width_pred, Height_pred, Length_pred]])
@@ -95,7 +100,7 @@ def correlation_menu(df):
 
 
 def main():
-    df_train = pd.read_csv('Predict.csv')
+    df_train = pd.read_csv('Train.csv')
     option = st.sidebar.selectbox('what would you like to do', ('Append', 'Predict', 'Show results', 'Show correlation'))
     if option == "Append":
         append_menu()
