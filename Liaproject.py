@@ -61,7 +61,7 @@ def predict_menu(df):
         Height_pred = st.text_input("Building Height")
         Length_pred = st.text_input("Building Length")
         submitted = st.form_submit_button("Predict price")
-        font_size = st.sidebar.slider("Enter text size", 10, 100, value=25)
+        font_size = st.sidebar.slider("Enter text size", 10, 100, value=20)
         if submitted:
             testing = pd.to_datetime((str(train_year) + "-" + str(train_month) + "-" + "01")).date()
             for x in range(0, len((df['Date']))):
@@ -75,7 +75,16 @@ def predict_menu(df):
             string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (exklusive resekostnader)"
             html_str = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output}</p> """
             st.markdown(html_str, unsafe_allow_html=True)
-            st.write(str(int(Height_pred)*3)+ "% besparing")
+            string_output_2 = "If used in a heated building:"
+            string_output_3 = str(round(1.4*int(Height_pred),2))+ " Temperaturskillnad mellan golv och tak"
+            string_output_4 = str(int(Height_pred)*3)+ "% besparing"
+            html_str_2 = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output_2}</p> """
+            html_str_3 = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output_3}</p> """
+            html_str_4 = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output_4}</p> """
+            st.markdown(html_str_2, unsafe_allow_html=True)
+            st.markdown(html_str_3, unsafe_allow_html=True)
+            st.markdown(html_str_4, unsafe_allow_html=True)
+
 
 
 def result_menu(df):
