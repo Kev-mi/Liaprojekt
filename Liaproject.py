@@ -10,12 +10,15 @@ import numpy as np
 import math
 
 
-def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_filter, year_filter):
-    a = df_f[df_f['Date'].dt.year == int(year_filter)]
+def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_filter, year_filter, year_filter2):
     b = df_f[df_f['Length'].between(Length_filter[0], Length_filter[1])]
     c = df_f[df_f['Height'].between(Height_filter[0], Height_filter[1])]
     d = df_f[df_f['Width'].between(Width_filter[0], Width_filter[1])]
     e = df_f[df_f['Price'].between(Price_filter[0], Price_filter[1])]
+    start_date = year_filter + "-01-01"
+    end_date = year_filter2 + "-12-31"
+    mask = (df_f["Date"] >= start_date) & (df_f["Date"] <= end_date)
+    a = df_f[mask]
     return a[(a.isin(b)) & (a.isin(c)) & (a.isin(d)) & (a.isin(e))].dropna()
 
 
@@ -78,7 +81,6 @@ def predict_menu(df):
 def result_menu(df):
     year_list = []
     button = st.sidebar.button("Delete duplicates")
-    st.write(df)
     Length_slider = st.sidebar.slider("Select length range", value=[int(df["Length"].min()), int(df["Length"].max())])
     Height_slider = st.sidebar.slider("Select height range", value=[int(df["Height"].min()), int(df["Height"].max())])
     Width_slider = st.sidebar.slider("Select width range", value=[int(df["Width"].min()), int(df["Width"].max())])
@@ -86,9 +88,10 @@ def result_menu(df):
     for x in df.index:
         year_list.append(str(df["Date"][x])[:4])
     year_list = set(year_list)
-    selected_year = st.sidebar.selectbox("Select year", sorted(year_list))
+    selected_year = st.sidebar.selectbox("Select year lower bound", sorted(year_list))
+    selected_year_2 = st.sidebar.selectbox("Select year upper bound", sorted(year_list), index=len(set(year_list))-1)
     df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
-    df = df_filter_function(df, Length_slider, Height_slider, Width_slider, Price_slider, selected_year)
+    df = df_filter_function(df, Length_slider, Height_slider, Width_slider, Price_slider, selected_year, selected_year_2)
     df['Date'] = pd.to_datetime(df['Date'])
     df["Date"] = df["Date"].dt.date
     st.write(df)
