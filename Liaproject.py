@@ -89,6 +89,8 @@ def result_menu(df):
     selected_year = st.sidebar.selectbox("Select year", sorted(year_list))
     df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
     df = df_filter_function(df, Length_slider, Height_slider, Width_slider, Price_slider, selected_year)
+    df['Date'] = pd.to_datetime(df['Date'])
+    df["Date"] = df["Date"].dt.date
     st.write(df)
     if button:
         duplicate_remover(df)
