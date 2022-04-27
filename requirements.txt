@@ -4,3 +4,4 @@ scikit-learn == 1.0.2
 plotly == 5.7.0
 scipy == 1.7.3
 numpy == 1.21.6
+statsmodels == 0.13.2
