@@ -45,12 +45,12 @@ def append_menu(df_append):
         Price = st.text_input("Price")
         Date = st.text_input("Input date if not today (yyyy-mm-dd)")
         submitted = st.form_submit_button("Submit")
+        st.write(df_append)
         if submitted:
             if Date == "":
                 Date = datetime.date(datetime.now())
             row_contents = [Length, Height, Width, Price, Date]
             df_append.loc[len(df_append)] = row_contents
-            st.write(df_append)
             csv_append('Train.csv', row_contents)
 
 
