@@ -53,6 +53,7 @@ def append_menu(local_csv):
                 Date = datetime.date(datetime.now())
             row_contents = [Length, Height, Width, Price, Date]
             local_csv = csv_append('Train.csv', row_contents)
+    st.write(local_csv)
     st.download_button(label="Download data as CSV", data=local_csv, file_name='train.csv', mime='text/csv',)
 
 
