@@ -36,8 +36,7 @@ def csv_append(file_name, list_of_elem):
         csv_writer.writerow("")
         csv_writer.writerow(list_of_elem)
         df_test = pd.read_csv('Train.csv')
-        st.write(df_test)
-        st.download_button(label="Download data as CSV", data=df_test, file_name='train.csv', mime='text/csv',)
+        return df_test
 
 
 def append_menu():
@@ -53,7 +52,8 @@ def append_menu():
             if Date == "":
                 Date = datetime.date(datetime.now())
             row_contents = [Length, Height, Width, Price, Date]
-            csv_append('Train.csv', row_contents)
+            local_csv = csv_append('Train.csv', row_contents)
+    st.download_button(label="Download data as CSV", data=local_csv, file_name='train.csv', mime='text/csv',)
 
 
 def predict_menu(df):
