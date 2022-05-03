@@ -36,7 +36,7 @@ def csv_append(file_name, list_of_elem):
         csv_writer.writerow(list_of_elem)
 
 
-def append_menu():
+def append_menu(df_append):
     with st.form("my_form"):
         st.write("Building info")
         Width = st.text_input("Building Width")
@@ -49,7 +49,8 @@ def append_menu():
             if Date == "":
                 Date = datetime.date(datetime.now())
             row_contents = [Length, Height, Width, Price, Date]
-            st.write(row_contents)
+            df_append.loc[len(df_append)] = row_contents
+            st.write(df_append)
             csv_append('Train.csv', row_contents)
 
 
@@ -120,10 +121,9 @@ def correlation_menu(df):
 def main():
     df_train = pd.read_csv('Train.csv', header=None, sep='\n')
     df_train = df_train[0].str.split(',', expand=True)
-    st.write(df_train)
     option = st.sidebar.selectbox('what would you like to do', ('Append', 'Predict', 'Show results', 'Show correlation'))
     if option == "Append":
-        append_menu()
+        append_menu(df_train)
     elif option == "Predict":
         predict_menu(df_train)
     elif option == "Show results":
