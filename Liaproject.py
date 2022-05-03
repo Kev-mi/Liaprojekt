@@ -37,6 +37,7 @@ def csv_append(file_name, list_of_elem):
         csv_writer.writerow(list_of_elem)
         df_test = pd.read_csv('Train.csv')
         st.write(df_test)
+        st.download_button(label="Download data as CSV", data=df_test, file_name='train.csv', mime='text/csv',)
 
 
 def append_menu():
