@@ -49,6 +49,7 @@ def append_menu():
             if Date == "":
                 Date = datetime.date(datetime.now())
             row_contents = [Length, Height, Width, Price, Date]
+            st.write(row_contents)
             csv_append('Train.csv', row_contents)
 
 
