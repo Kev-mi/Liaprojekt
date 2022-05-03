@@ -54,10 +54,13 @@ def append_menu(local_csv):
             row_contents = [Length, Height, Width, Price, Date]
             local_csv = csv_append('Train.csv', row_contents)
     st.write(local_csv)
-    testing_downloads = "gedfgdgfdfg"
-    st.download_button('Download CSV', testing_downloads, 'train.csv')
-    with open('myfile.csv') as f:
-        st.download_button('Download CSV', f)
+    try:
+        testing_downloads = "gedfgdgfdfg"
+        st.download_button('Download CSV', testing_downloads, 'train.csv')
+        with open('myfile.csv') as f:
+            st.download_button('Download CSV', f)
+    except FileNotFoundError:
+        pass
 
 
 def predict_menu(df):
