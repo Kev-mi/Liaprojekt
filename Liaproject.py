@@ -55,8 +55,8 @@ def append_menu(local_csv):
             local_csv = csv_append('Train.csv', row_contents)
     st.write(local_csv)
     try:
-        local_csv = local_csv.astype(pd.StringDtype())
-        st.download_button('Download CSV', local_csv, 'train.csv')
+        numpy_array = local_csv.to_numpy()
+        st.download_button('Download CSV', numpy_array, 'train.csv')
         with open('myfile.csv') as f:
             st.download_button('Download CSV', f)
     except FileNotFoundError:
