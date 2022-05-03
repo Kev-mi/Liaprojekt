@@ -35,6 +35,8 @@ def csv_append(file_name, list_of_elem):
         csv_writer = writer(write_obj)
         csv_writer.writerow("")
         csv_writer.writerow(list_of_elem)
+        df_test = pd.read_csv('Train.csv')
+        st.write(df_test)
 
 
 def append_menu():
