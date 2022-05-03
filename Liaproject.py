@@ -46,10 +46,10 @@ def convert_df_to_csv(df_pd_to_csv):
 def append_menu(df_unconverted):
     with st.form("my_form"):
         st.write("Building info")
-        Width = st.text_input("Building Width")
-        Height = st.text_input("Building Height")
-        Length = st.text_input("Building Length")
-        Price = st.text_input("Price")
+        Width = st.text_input("Building Width (meter)")
+        Height = st.text_input("Building Height (meter)")
+        Length = st.text_input("Building Length (meter)")
+        Price = st.text_input("Price (tusen sek")
         Date = st.text_input("Input date if not today (yyyy-mm-dd)")
         submitted = st.form_submit_button("Submit")
         if submitted:
@@ -57,7 +57,6 @@ def append_menu(df_unconverted):
                 Date = datetime.date(datetime.now())
             row_contents = [Length, Height, Width, Price, Date]
             local_csv = csv_append('Train.csv', row_contents)
-    st.write(df_unconverted)
     try:
         local_csv = convert_df_to_csv(df_unconverted)
         st.download_button('Download CSV', local_csv, 'train.csv')
@@ -72,9 +71,9 @@ def predict_menu(df):
         st.write("Building info")
         train_year = st.sidebar.selectbox("Select year to use data from", sorted(set(pd.DatetimeIndex(df['Date']).year)))
         train_month = st.sidebar.selectbox("Select month to use data from",sorted(set(pd.DatetimeIndex(df['Date']).month)))
-        Width_pred = st.text_input("Building Width")
-        Height_pred = st.text_input("Building Height")
-        Length_pred = st.text_input("Building Length")
+        Width_pred = st.text_input("Building Width (meter)")
+        Height_pred = st.text_input("Building Height (meter)")
+        Length_pred = st.text_input("Building Length (meter)")
         submitted = st.form_submit_button("Predict price")
         font_size = st.sidebar.slider("Enter text size", 10, 100, value=20)
         if submitted:
