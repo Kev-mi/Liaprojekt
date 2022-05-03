@@ -55,8 +55,8 @@ def append_menu(local_csv):
             local_csv = csv_append('Train.csv', row_contents)
     st.write(local_csv)
     try:
-        testing_downloads = "gedfgdgfdfg"
-        st.download_button('Download CSV', testing_downloads, 'train.csv')
+        local_csv = local_csv.id.apply(str)
+        st.download_button('Download CSV', local_csv, 'train.csv')
         with open('myfile.csv') as f:
             st.download_button('Download CSV', f)
     except FileNotFoundError:
