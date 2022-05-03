@@ -54,7 +54,9 @@ def append_menu(local_csv):
             row_contents = [Length, Height, Width, Price, Date]
             local_csv = csv_append('Train.csv', row_contents)
     st.write(local_csv)
-    st.download_button(label="Download data as CSV", data=local_csv, file_name='train.csv', mime='text/csv',)
+    st.download_button('Download CSV', local_csv, 'text/csv')
+    with open('myfile.csv') as f:
+        st.download_button('Download CSV', f)
 
 
 def predict_menu(df):
