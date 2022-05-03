@@ -49,7 +49,7 @@ def append_menu(df_unconverted):
         Width = st.text_input("Building Width (meter)")
         Height = st.text_input("Building Height (meter)")
         Length = st.text_input("Building Length (meter)")
-        Price = st.text_input("Price (tusen sek")
+        Price = st.text_input("Price (tusen sek)")
         Date = st.text_input("Input date if not today (yyyy-mm-dd)")
         submitted = st.form_submit_button("Submit")
         if submitted:
