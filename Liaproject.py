@@ -31,7 +31,7 @@ def duplicate_remover(df_duplicate):
 
 
 def csv_append(file_name, list_of_elem):
-    with open(file_name, 'a+', newline='') as write_obj:
+    with open(file_name, 'a+', lineterminator='\n') as write_obj:
         csv_writer = writer(write_obj)
         csv_writer.writerow(list_of_elem)
 
