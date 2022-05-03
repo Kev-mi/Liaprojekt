@@ -55,7 +55,7 @@ def append_menu(local_csv):
             local_csv = csv_append('Train.csv', row_contents)
     st.write(local_csv)
     testing_downloads = "gedfgdgfdfg"
-    st.download_button('Download CSV', testing_downloads, 'text/csv')
+    st.download_button('Download CSV', testing_downloads, 'testing')
     with open('myfile.csv') as f:
         st.download_button('Download CSV', f)
 
