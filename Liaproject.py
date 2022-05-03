@@ -117,7 +117,7 @@ def correlation_menu(df):
 
 
 def main():
-    df_train = pd.read_csv('Train.csv', on_bad_lines='skip')
+    df_train = pd.read_csv('Train.csv', sep='delimiter', header=None)
     option = st.sidebar.selectbox('what would you like to do', ('Append', 'Predict', 'Show results', 'Show correlation'))
     if option == "Append":
         append_menu()
