@@ -37,9 +37,13 @@ def csv_append(file_name, list_of_elem):
         csv_writer.writerow(list_of_elem)
         df_test = pd.read_csv('Train.csv')
         return df_test
+    
+    
+def convert_df_to_csv(df_pd_to_csv):
+  return df_pd_to_csv.to_csv().encode('utf-8')
 
 
-def append_menu(local_csv):
+def append_menu(df_unconverted):
     with st.form("my_form"):
         st.write("Building info")
         Width = st.text_input("Building Width")
@@ -53,10 +57,10 @@ def append_menu(local_csv):
                 Date = datetime.date(datetime.now())
             row_contents = [Length, Height, Width, Price, Date]
             local_csv = csv_append('Train.csv', row_contents)
-    st.write(local_csv)
+    st.write(df_unconverted)
     try:
-        numpy_array = local_csv.to_numpy()
-        st.download_button('Download CSV', numpy_array, 'train.csv')
+        local_csv = convert_df_to_csv(df_unconverted)
+        st.download_button('Download CSV', local_csv, 'train.csv')
         with open('myfile.csv') as f:
             st.download_button('Download CSV', f)
     except FileNotFoundError:
