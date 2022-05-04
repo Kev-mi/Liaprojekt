@@ -86,7 +86,7 @@ def predict_menu(df):
             regr = linear_model.LinearRegression()
             regr.fit(X, y)
             predicted_price = regr.predict([[Width_pred, Height_pred, Length_pred]])
-            string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (exklusive resekostnader)" + "fr.o.m." + str(train_year) + "-" + str(train_month) +"-dd"
+            string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (exklusive resekostnader)" + "fr.o.m. " + str(train_year) + "-" + str(train_month) +"-dd"
             html_str = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output}</p> """
             st.markdown(html_str, unsafe_allow_html=True)
             string_output_2 = "If used in a heated building:"
