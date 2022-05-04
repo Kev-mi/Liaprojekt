@@ -137,7 +137,7 @@ def main():
         append_menu(df_train)
     elif option == "Predict":
         predict_menu(df_train)
-    elif option == "Show results":
+    elif option == "Show Data":
         result_menu(df_train)
     elif option == "Show correlation":
         correlation_menu(df_train)
