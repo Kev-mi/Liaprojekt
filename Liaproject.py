@@ -11,11 +11,12 @@ import math
 
 
 def fan_number_calc(df_for_calc,room_length, room_width):
-    #df.insert(2, "number of fans", [21, 23, 24, 21], True)
-    st.write(room_length)
-    st.write(room_width)
-    df_for_calc['Number of fans along width'] = df_for_calc['Fan Diameter (coverage)'].div(float(1.4)*float(room_width))
-    df_for_calc['Number of fans along along length'] = df_for_calc['Fan Diameter (coverage)'].div(float(1.4)*float(room_length))
+    fans_length = [room_length]*len(df_for_calc)
+    fans_width = [room_width]*len(df_for_calc)
+    df_for_calc.insert(2, 'Number of fans along width', fans_length, True)
+    df_for_calc.insert(2, 'Number of fans along along length', fans_width, True)
+    #df_for_calc['Number of fans along width'] = df_for_calc['Fan Diameter (coverage)'].div(float(1.4)*float(room_width))
+    #df_for_calc['Number of fans along along length'] = df_for_calc['Fan Diameter (coverage)'].div(float(1.4)*float(room_length))
     st.write(df_for_calc)
 
 
@@ -95,7 +96,7 @@ def predict_menu(df):
             regr = linear_model.LinearRegression()
             regr.fit(X, y)
             predicted_price = regr.predict([[Width_pred, Height_pred, Length_pred]])
-            df_fans = fan_number_calc(pd.read_csv('fans.csv'), Length_pred, Width_pred)
+            df_fans = fan_number_calc(pd.read_csv('fans.csv'), float(Length_pred), float(Width_pred))
             string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (exklusive resekostnader)" + "fr.o.m. " + str(train_year) + "-" + str(train_month) +"-dd"
             html_str = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output}</p> """
             st.markdown(html_str, unsafe_allow_html=True)
