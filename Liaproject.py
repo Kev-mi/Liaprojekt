@@ -12,7 +12,8 @@ import math
 
 def fan_number_calc(df_for_calc,room_length, room_width):
     #df.insert(2, "number of fans", [21, 23, 24, 21], True)
-    df_for_calc['Number of fans'] = df_for_calc['Fan Diameter (coverage)'].div(1.4)
+    df_for_calc['Number of fans along width'] = df_for_calc['Fan Diameter (coverage)'].div(1.4).div(room_width)
+    df_for_calc['Number of fans along along length'] = df_for_calc['Fan Diameter (coverage)'].div(1.4).div(room_length)
     st.write(df_for_calc)
 
 
