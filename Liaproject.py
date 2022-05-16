@@ -10,8 +10,10 @@ import numpy as np
 import math
 
 
-def fan_number_calc(df_for_calc):
+def fan_number_calc(df_for_calc,room_length, room_width):
     st.write(df_for_calc)
+    #df.insert(2, "number of fans", [21, 23, 24, 21], True)
+    df['Number of fans'] = df['Fan Diameter (coverage)'].div(1.4)
 
 
 def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_filter, year_filter, year_filter2):
@@ -90,7 +92,7 @@ def predict_menu(df):
             regr = linear_model.LinearRegression()
             regr.fit(X, y)
             predicted_price = regr.predict([[Width_pred, Height_pred, Length_pred]])
-            df_fans = fan_number_calc(pd.read_csv('fans.csv'))
+            df_fans = fan_number_calc(pd.read_csv('fans.csv'), Length_pred, Width_pred)
             string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (exklusive resekostnader)" + "fr.o.m. " + str(train_year) + "-" + str(train_month) +"-dd"
             html_str = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output}</p> """
             st.markdown(html_str, unsafe_allow_html=True)
