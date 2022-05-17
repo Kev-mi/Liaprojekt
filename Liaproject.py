@@ -85,7 +85,7 @@ def predict_menu(df):
         Width_pred = st.text_input("Building Width (meter)")
         city_list = sorted(["Malmö", "göteborg", "stockolm"])
         city_1 = st.sidebar.selectbox("Select which city to start from", city_list)
-        city_2 = st.sidebar.selectbox("Select which city to start from", city_list)
+        city_2 = st.sidebar.selectbox("Select which city to end in", city_list)
         Height_pred = st.text_input("Building Height (meter)")
         Length_pred = st.text_input("Building Length (meter)")
         submitted = st.form_submit_button("Predict price")
