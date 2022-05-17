@@ -14,7 +14,7 @@ from geopy.distance import geodesic
 def distance_calc(start_city, end_city):
     coordinates = {"Malmö" : (55.60587, 13.00073), "Göteborg" : (57.708870, 11.974560), "Stockholm" : (59.334591, 18.063240) }
     distance = geodesic(coordinates[start_city], coordinates[end_city]).km
-    st.write(distance)
+    st.write("distance from " + start_city " to " + "end city" + " is " + str(round(distance, 2)) + "km")
 
 
 def fan_number_calc(df_for_calc,room_length, room_width):
