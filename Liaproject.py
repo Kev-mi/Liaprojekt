@@ -11,6 +11,12 @@ import math
 from geopy.distance import geodesic
 
 
+def distance_calc(start_city, end_city):
+    coordinates = {"Malmö" : (55.60587, 13.00073), "Göteborg" : (57.708870, 11.974560), "Stockholm" : (59.334591, 18.063240) }
+    coordinates[start_city], coordinates[end_city]
+    return geodesic(coordinates[start_city], coordinates[end_city]).km
+
+
 def fan_number_calc(df_for_calc,room_length, room_width):
     fans_length = [room_length]*len(df_for_calc)
     fans_width = [room_width]*len(df_for_calc)
@@ -83,7 +89,7 @@ def predict_menu(df):
         train_year = st.sidebar.selectbox("Select year to use data from", sorted(set(pd.DatetimeIndex(df['Date']).year)))
         train_month = st.sidebar.selectbox("Select month to use data from",sorted(set(pd.DatetimeIndex(df['Date']).month)))
         Width_pred = st.text_input("Building Width (meter)")
-        city_list = sorted(["Malmö", "göteborg", "stockolm"])
+        city_list = sorted(["Malmö", "Göteborg", "Stockolm"])
         city_1 = st.sidebar.selectbox("Select which city to start from", city_list)
         city_2 = st.sidebar.selectbox("Select which city to end in", city_list)
         Height_pred = st.text_input("Building Height (meter)")
@@ -101,6 +107,7 @@ def predict_menu(df):
             regr.fit(X, y)
             predicted_price = regr.predict([[Width_pred, Height_pred, Length_pred]])
             df_fans = fan_number_calc(pd.read_csv('fans.csv'), float(Length_pred), float(Width_pred))
+            st.write(distance_calc(city_1, city_2))
             string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (exklusive resekostnader)" + "fr.o.m. " + str(train_year) + "-" + str(train_month) +"-dd"
             html_str = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output}</p> """
             st.markdown(html_str, unsafe_allow_html=True)
