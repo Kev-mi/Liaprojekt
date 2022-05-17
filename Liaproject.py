@@ -16,7 +16,6 @@ def distance_calc(start_city, end_city):
     coordinates[start_city], coordinates[end_city]
     distance = geodesic(coordinates[start_city], coordinates[end_city]).km
     st.write(distance)
-    return distance
 
 
 def fan_number_calc(df_for_calc,room_length, room_width):
