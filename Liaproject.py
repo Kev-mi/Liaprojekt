@@ -8,6 +8,7 @@ from scipy.stats import pearsonr
 import datetime as dt
 import numpy as np
 import math
+from geopy.distance import geodesic
 
 
 def fan_number_calc(df_for_calc,room_length, room_width):
@@ -82,6 +83,8 @@ def predict_menu(df):
         train_year = st.sidebar.selectbox("Select year to use data from", sorted(set(pd.DatetimeIndex(df['Date']).year)))
         train_month = st.sidebar.selectbox("Select month to use data from",sorted(set(pd.DatetimeIndex(df['Date']).month)))
         Width_pred = st.text_input("Building Width (meter)")
+        city_1 = st.sidebar.selectbox("Select which city to start from", sorted("Malmö göteborg stockolm"))
+        city_2 = st.sidebar.selectbox("Select which city to start from", sorted("Malmö göteborg stockolm"))
         Height_pred = st.text_input("Building Height (meter)")
         Length_pred = st.text_input("Building Length (meter)")
         submitted = st.form_submit_button("Predict price")
