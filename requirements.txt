@@ -5,3 +5,4 @@ plotly == 5.7.0
 scipy == 1.7.3
 numpy == 1.21.6
 statsmodels == 0.13.2
+geopy == 2.2.0
