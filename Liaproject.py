@@ -89,7 +89,7 @@ def predict_menu(df):
         train_year = st.sidebar.selectbox("Select year to use data from", sorted(set(pd.DatetimeIndex(df['Date']).year)))
         train_month = st.sidebar.selectbox("Select month to use data from",sorted(set(pd.DatetimeIndex(df['Date']).month)))
         Width_pred = st.text_input("Building Width (meter)")
-        city_list = sorted(["Malmö", "Göteborg", "Stockolm"])
+        city_list = sorted(["Malmö", "Göteborg", "Stockholm"])
         city_1 = st.sidebar.selectbox("Select which city to start from", city_list)
         city_2 = st.sidebar.selectbox("Select which city to end in", city_list)
         Height_pred = st.text_input("Building Height (meter)")
