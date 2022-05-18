@@ -148,7 +148,7 @@ def correlation_menu(df):
     x_var = st.sidebar.selectbox('select what you want to see correlation with price', ('Length', 'Height', 'Width'))
     plot = px.scatter(data_frame=df, x=df[x_var], y="Price", trendline="ols")
     corr, _ = pearsonr(df[x_var], df["Price"])
-    st.title("p = " str(corr)[0:5])
+    st.title("p = " + str(corr)[0:5])
     st.plotly_chart(plot)
 
 
