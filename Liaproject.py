@@ -25,7 +25,7 @@ def distance_calc(start_city, end_city):
     lat_city_1, lat_city_2, lon_city_1, lon_city_2 = [coordinates[start_city]], [coordinates[end_city]], [coordinates[start_city]], [coordinates[end_city]]
     lat_city_1, lat_city_2, lon_city_1, lon_city_2 = [coordinates[start_city]][0][0], [coordinates[end_city]][0][0], [coordinates[start_city]][0][1], [coordinates[end_city]][0][1]
     df = pd.DataFrame({'lat': [lat_city_1, lat_city_2], 'lon': [lon_city_1, lon_city_2]})
-    st.write(df)
+    st.map(df)
 
 
 def fan_number_calc(df_for_calc,room_length, room_width):
