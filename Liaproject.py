@@ -15,7 +15,7 @@ def travel_cost():
     city_list = sorted(["Malmö", "Göteborg", "Stockholm"])
     city_1 = st.sidebar.selectbox("Select which city to start from", city_list)
     city_2 = st.sidebar.selectbox("Select which city to end in", city_list)
-    st.write("")
+    distance_calc(city_1, city_2)
     
 
 def distance_calc(start_city, end_city):
