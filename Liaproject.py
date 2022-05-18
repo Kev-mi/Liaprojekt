@@ -23,7 +23,7 @@ def distance_calc(start_city, end_city):
     distance = geodesic(coordinates[start_city], coordinates[end_city]).km
     st.write("distance from " + start_city + " to " + end_city + " is " + str(round(distance, 2)) + "km")
     lat_city_1, lat_city_2, lon_city_1, lon_city_2 = [coordinates[start_city]], [coordinates[end_city]], [coordinates[start_city]], [coordinates[end_city]]
-    lat_city_1, lat_city_2, lon_city_1, lon_city_2 = [coordinates[start_city]][0][0], [coordinates[end_city]][0][0], [coordinates[start_city]][1][1], [coordinates[end_city]][1][1]
+    lat_city_1, lat_city_2, lon_city_1, lon_city_2 = [coordinates[start_city]][0][0], [coordinates[end_city]][0][0], [coordinates[start_city]][0][1], [coordinates[end_city]][0][1]
     df = pd.DataFrame({'lat': [lat_city_1, lat_city_2], 'lon': [coordinates[start_city], coordinates[end_city]]})
     st.write(df)
 
