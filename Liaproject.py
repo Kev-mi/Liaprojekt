@@ -11,6 +11,12 @@ import math
 from geopy.distance import geodesic
 
 
+def travel_cost:
+    city_list = sorted(["Malmö", "Göteborg", "Stockholm"])
+    city_1 = st.sidebar.selectbox("Select which city to start from", city_list)
+    city_2 = st.sidebar.selectbox("Select which city to end in", city_list)
+    
+
 def distance_calc(start_city, end_city):
     coordinates = {"Malmö" : (55.60587, 13.00073), "Göteborg" : (57.708870, 11.974560), "Stockholm" : (59.334591, 18.063240) }
     distance = geodesic(coordinates[start_city], coordinates[end_city]).km
@@ -154,7 +160,7 @@ def correlation_menu(df):
 
 def main():
     df_train = pd.read_csv('Train.csv')
-    option = st.sidebar.selectbox('what would you like to do', ('Append', 'Predict', 'Show data', 'Show correlation'))
+    option = st.sidebar.selectbox('what would you like to do', ('Append', 'Predict', 'Show data', 'Show correlation', 'Calculate travel cost'))
     if option == "Append":
         append_menu(df_train)
     elif option == "Predict":
@@ -163,6 +169,8 @@ def main():
         result_menu(df_train)
     elif option == "Show correlation":
         correlation_menu(df_train)
+    elif option == "Calculate travel cost":
+        travel_cost()
 
 
 if __name__ == "__main__":
