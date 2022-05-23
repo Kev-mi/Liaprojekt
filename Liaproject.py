@@ -205,7 +205,7 @@ def correlation_menu(df):
 def main():
     df_train = pd.read_csv('Train.csv')
     option = st.sidebar.selectbox('what would you like to do', ('Append', 'Predict','predict(travel cost included)', 'Show data', 'Show correlation', 'Calculate travel cost'))
-    options = {"Append" : "append_menu(df_train)", "Predict" : "predict_menu(df_train)", "predict(travel cost included)" : "predict_menu_travel(df_train)", "Show data" : "result_menu(df_train)", "Show correlation" : "correlation_menu(df_train)", "Calculate travel cost" : "travel_cost()"}
+    options = {"Append" : "append_menu(df_train)", "Predict" : "predict_menu(df_train)", "Predict(travel cost included)" : "predict_menu_travel(df_train)", "Show data" : "result_menu(df_train)", "Show correlation" : "correlation_menu(df_train)", "Calculate travel cost" : "travel_cost()"}
     eval(options[option])
     
 
