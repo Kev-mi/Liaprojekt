@@ -11,6 +11,45 @@ import math
 from geopy.distance import geodesic
 
 
+def predict_menu_travel(df_pred_travel):
+    with st.form("my_form"):
+        st.write("Building info")
+        train_year = st.sidebar.selectbox("Select year to use data from", sorted(set(pd.DatetimeIndex(df['Date']).year)))
+        train_month = st.sidebar.selectbox("Select month to use data from",sorted(set(pd.DatetimeIndex(df['Date']).month)))
+        Width_pred = st.text_input("Building Width (meter)")
+        city_list = sorted(["Malmö", "Göteborg", "Stockholm"])
+        city_1 = st.sidebar.selectbox("Select which city to start from", city_list)
+        city_2 = st.sidebar.selectbox("Select which city to end in", city_list)
+        Height_pred = st.text_input("Building Height (meter)")
+        Length_pred = st.text_input("Building Length (meter)")
+        submitted = st.form_submit_button("Predict price")
+        font_size = st.sidebar.slider("Enter text size", 10, 100, value=20)
+        if submitted:
+            testing = pd.to_datetime((str(train_year) + "-" + str(train_month) + "-" + "01")).date()
+            for x in range(0, len((df['Date']))):
+                df['Date'][x] = pd.to_datetime(df['Date'][x])
+            df_pred = df.loc[((df['Date'] > testing)).dropna()]
+            X = df_pred[['Width', 'Height', 'Length']]
+            y = df_pred['Price']
+            regr = linear_model.LinearRegression()
+            regr.fit(X, y)
+            predicted_price = regr.predict([[Width_pred, Height_pred, Length_pred]])
+            df_fans = fan_number_calc(pd.read_csv('fans.csv'), float(Length_pred), float(Width_pred))
+            distance_calc(city_1, city_2)
+            string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (exklusive resekostnader)" + "fr.o.m. " + str(train_year) + "-" + str(train_month) +"-dd"
+            html_str = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output}</p> """
+            st.markdown(html_str, unsafe_allow_html=True)
+            string_output_2 = "If used in a heated building:"
+            string_output_3 = str(round(1.4*int(Height_pred),2))+ " Temperaturskillnad mellan golv och tak"
+            string_output_4 = str(int(Height_pred)*3)+ "% besparing"
+            html_str_2 = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output_2}</p> """
+            html_str_3 = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output_3}</p> """
+            html_str_4 = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output_4}</p> """
+            st.markdown(html_str_2, unsafe_allow_html=True)
+            st.markdown(html_str_3, unsafe_allow_html=True)
+            st.markdown(html_str_4, unsafe_allow_html=True)
+
+
 def travel_cost():
     city_list = sorted(["Malmö", "Göteborg", "Stockholm"])
     city_1 = st.sidebar.selectbox("Select which city to start from", city_list)
@@ -165,17 +204,10 @@ def correlation_menu(df):
 
 def main():
     df_train = pd.read_csv('Train.csv')
-    option = st.sidebar.selectbox('what would you like to do', ('Append', 'Predict', 'Show data', 'Show correlation', 'Calculate travel cost'))
-    if option == "Append":
-        append_menu(df_train)
-    elif option == "Predict":
-        predict_menu(df_train)
-    elif option == "Show data":
-        result_menu(df_train)
-    elif option == "Show correlation":
-        correlation_menu(df_train)
-    elif option == "Calculate travel cost":
-        travel_cost()
+    option = st.sidebar.selectbox('what would you like to do', ('Append', 'Predict','predict(travel cost included)', 'Show data', 'Show correlation', 'Calculate travel cost'))
+    options = {"Append" : "append_menu(df_train)", "Predict" : "predict_menu(df_train)", "predict(travel cost included)" : "predict_menu_travel(df_train)", "Show data" : "result_menu(df_train)", "Show correlation" : "correlation_menu(df_train)", "Calculate travel cost" : "travel_cost()"}
+    eval(options[option])
+    
 
 
 if __name__ == "__main__":
