@@ -74,7 +74,7 @@ def fan_number_calc(df_for_calc,room_length, room_width):
     df_for_calc.insert(2, 'Number of fans along along length', fans_width, True)
     df_for_calc['Number of fans along width'] = df_for_calc['Number of fans along width'].div(df_for_calc['Fan Diameter (coverage)'].values,axis=0).div(float(0.63829)).apply(np.floor)
     df_for_calc['Number of fans along along length'] = df_for_calc['Number of fans along along length'].div(df_for_calc['Fan Diameter (coverage)'].values,axis=0).div(float(0.63829)).apply(np.floor)
-    st.write(df_for_calc)
+    st.write(df_for_calc.astype(int))
 
 
 def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_filter, year_filter, year_filter2):
