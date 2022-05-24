@@ -11,7 +11,7 @@ import math
 from geopy.distance import geodesic
 
 def df_filter_function_travel(df):
-
+    print("")
 
 def predict_menu_travel(df):
     with st.form("my_form"):
