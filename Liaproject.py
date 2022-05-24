@@ -180,11 +180,14 @@ def predict_menu(df):
 
 def result_menu(df):
     year_list = []
+    city_list = sorted(["Malmö", "Göteborg", "Stockholm"])
     button = st.sidebar.button("Delete duplicates")
     Length_slider = st.sidebar.slider("Select length range", value=[int(df["Length"].min()), int(df["Length"].max())])
     Height_slider = st.sidebar.slider("Select height range", value=[int(df["Height"].min()), int(df["Height"].max())])
     Width_slider = st.sidebar.slider("Select width range", value=[int(df["Width"].min()), int(df["Width"].max())])
     Price_slider = st.sidebar.slider("Select price range", value=[int(df["Price"].min()), int(df["Price"].max())])
+    city_1 = st.selectbox("Select which city to start from", city_list)
+    city_2 = st.selectbox("Select which city to end in", city_list)
     for x in df.index:
         year_list.append(str(df["Date"][x])[:4])
     year_list = set(year_list)
