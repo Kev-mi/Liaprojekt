@@ -41,7 +41,7 @@ def predict_menu_travel(df):
             regr.fit(X, y)
             predicted_price = regr.predict([[Width_pred, Height_pred, Length_pred]])
             df_fans = fan_number_calc(pd.read_csv('fans.csv'), float(Length_pred), float(Width_pred))
-            distance_calc(city_1, city_2)
+            distance_calc(city_1, city_2, False)
             string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (exklusive resekostnader)" + "fr.o.m. " + str(train_year) + "-" + str(train_month) +"-dd"
             html_str = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output}</p> """
             st.markdown(html_str, unsafe_allow_html=True)
@@ -60,17 +60,18 @@ def travel_cost():
     city_list = sorted(["Malmö", "Göteborg", "Stockholm"])
     city_1 = st.sidebar.selectbox("Select which city to start from", city_list)
     city_2 = st.sidebar.selectbox("Select which city to end in", city_list)
-    distance_calc(city_1, city_2)
+    distance_calc(city_1, city_2, True)
     
 
-def distance_calc(start_city, end_city):
+def distance_calc(start_city, end_city, show_map):
     coordinates = {"Malmö" : (55.60587, 13.00073), "Göteborg" : (57.708870, 11.974560), "Stockholm" : (59.334591, 18.063240) }
     distance = geodesic(coordinates[start_city], coordinates[end_city]).km
     st.write("distance from " + start_city + " to " + end_city + " is " + str(round(distance, 2)) + "km")
     lat_city_1, lat_city_2, lon_city_1, lon_city_2 = [coordinates[start_city]], [coordinates[end_city]], [coordinates[start_city]], [coordinates[end_city]]
     lat_city_1, lat_city_2, lon_city_1, lon_city_2 = [coordinates[start_city]][0][0], [coordinates[end_city]][0][0], [coordinates[start_city]][0][1], [coordinates[end_city]][0][1]
     df = pd.DataFrame({'lat': [lat_city_1, lat_city_2], 'lon': [lon_city_1, lon_city_2]})
-    st.map(df)
+    if show_map:
+        st.map(df)
 
 
 def fan_number_calc(df_for_calc,room_length, room_width):
@@ -162,7 +163,7 @@ def predict_menu(df):
             regr.fit(X, y)
             predicted_price = regr.predict([[Width_pred, Height_pred, Length_pred]])
             df_fans = fan_number_calc(pd.read_csv('fans.csv'), float(Length_pred), float(Width_pred))
-            distance_calc(city_1, city_2)
+            distance_calc(city_1, city_2,False)
             string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (exklusive resekostnader)" + "fr.o.m. " + str(train_year) + "-" + str(train_month) +"-dd"
             html_str = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output}</p> """
             st.markdown(html_str, unsafe_allow_html=True)
