@@ -30,9 +30,7 @@ def predict_menu_travel(df):
         submitted = st.form_submit_button("Predict price")
         font_size = st.sidebar.slider("Enter text size", 10, 100, value=20)
         if submitted:
-            st.write(df)
             df = df_filter_function_travel(df,city_1,city_2)
-            st.write(df)
             testing = pd.to_datetime((str(train_year) + "-" + str(train_month) + "-" + "01")).date()
             for x in range(0, len((df['Date']))):
                 df['Date'][x] = pd.to_datetime(df['Date'][x])
