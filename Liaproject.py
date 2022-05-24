@@ -19,11 +19,11 @@ def predict_menu_travel(df):
         train_year = st.sidebar.selectbox("Select year to use data from", sorted(set(pd.DatetimeIndex(df['Date']).year)))
         train_month = st.sidebar.selectbox("Select month to use data from",sorted(set(pd.DatetimeIndex(df['Date']).month)))
         Width_pred = st.text_input("Building Width (meter)")
+        Height_pred = st.text_input("Building Height (meter)")
+        Length_pred = st.text_input("Building Length (meter)")
         city_list = sorted(["Malmö", "Göteborg", "Stockholm"])
         city_1 = st.selectbox("Select which city to start from", city_list)
         city_2 = st.selectbox("Select which city to end in", city_list)
-        Height_pred = st.text_input("Building Height (meter)")
-        Length_pred = st.text_input("Building Length (meter)")
         submitted = st.form_submit_button("Predict price")
         font_size = st.sidebar.slider("Enter text size", 10, 100, value=20)
         if submitted:
