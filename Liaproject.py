@@ -42,7 +42,7 @@ def predict_menu_travel(df):
             predicted_price = regr.predict([[Width_pred, Height_pred, Length_pred]])
             df_fans = fan_number_calc(pd.read_csv('fans.csv'), float(Length_pred), float(Width_pred))
             distance_calc(city_1, city_2, False)
-            string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (exklusive resekostnader)" + "fr.o.m. " + str(train_year) + "-" + str(train_month) +"-dd"
+            string_output = "price is " + str(math.floor(predicted_price[0])) + "tkr" + " (inklusive resekostnader)" + "fr.o.m. " + str(train_year) + "-" + str(train_month) +"-dd"
             html_str = f"""<style>p.a{{font:bold {font_size}px Courier;}}</style><p class="a">{string_output}</p> """
             st.markdown(html_str, unsafe_allow_html=True)
             string_output_2 = "If used in a heated building:"
