@@ -10,8 +10,10 @@ import numpy as np
 import math
 from geopy.distance import geodesic
 
+def df_filter_function_travel(df):
 
-def predict_menu_travel(df_pred_travel):
+
+def predict_menu_travel(df):
     with st.form("my_form"):
         st.write("Building info")
         train_year = st.sidebar.selectbox("Select year to use data from", sorted(set(pd.DatetimeIndex(df['Date']).year)))
@@ -76,7 +78,6 @@ def fan_number_calc(df_for_calc,room_length, room_width):
     df_for_calc['Number of fans along along length'] = df_for_calc['Number of fans along along length'].div(df_for_calc['Fan Diameter (coverage)'].values,axis=0).div(float(0.63829)).apply(np.floor)
     st.write(df_for_calc.astype(int))
 
-
 def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_filter, year_filter, year_filter2):
     b = df_f[df_f['Length'].between(Length_filter[0], Length_filter[1])]
     c = df_f[df_f['Height'].between(Height_filter[0], Height_filter[1])]
@@ -116,13 +117,16 @@ def append_menu(df_unconverted):
         Width = st.text_input("Building Width (meter)")
         Length = st.text_input("Building Length (meter)")
         Height = st.text_input("Building Height (meter)")
+        city_list = sorted(["Malmö", "Göteborg", "Stockholm"])
+        city_1 = st.text_input("Select which city to start from", city_list)
+        city_2 = st.text_input("Select which city to end in", city_list)
         Price = st.text_input("Price (tusen sek)")
         Date = st.text_input("Input date if not today (yyyy-mm-dd)")
         submitted = st.form_submit_button("Submit")
         if submitted:
             if Date == "":
                 Date = datetime.date(datetime.now())
-            row_contents = [Length, Height, Width, Price, Date]
+            row_contents = [Length, Height, Width, Price, Date,	city_1 + "-" + city_2]
             local_csv = csv_append('Train.csv', row_contents)
     try:
         local_csv = convert_df_to_csv(df_unconverted)
@@ -139,9 +143,6 @@ def predict_menu(df):
         train_year = st.sidebar.selectbox("Select year to use data from", sorted(set(pd.DatetimeIndex(df['Date']).year)))
         train_month = st.sidebar.selectbox("Select month to use data from",sorted(set(pd.DatetimeIndex(df['Date']).month)))
         Width_pred = st.text_input("Building Width (meter)")
-        city_list = sorted(["Malmö", "Göteborg", "Stockholm"])
-        city_1 = st.sidebar.selectbox("Select which city to start from", city_list)
-        city_2 = st.sidebar.selectbox("Select which city to end in", city_list)
         Height_pred = st.text_input("Building Height (meter)")
         Length_pred = st.text_input("Building Length (meter)")
         submitted = st.form_submit_button("Predict price")
