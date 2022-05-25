@@ -89,12 +89,11 @@ def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_f
     d = df_f[df_f['Width'].between(Width_filter[0], Width_filter[1])]
     e = df_f[df_f['Price'].between(Price_filter[0], Price_filter[1])]
     f = df_f[df_f['cities'].str.match(city_filter)]
-    st.write(f)
     start_date = year_filter + "-01-01"
     end_date = year_filter2 + "-12-31"
     mask = (df_f["Date"] >= start_date) & (df_f["Date"] <= end_date)
     a = df_f[mask]
-    return a[(a.isin(b)) & (a.isin(c)) & (a.isin(d)) & (a.isin(e))].dropna()
+    return a[(a.isin(b)) & (a.isin(c)) & (a.isin(d)) & (a.isin(e))& (a.isin(f))].dropna()
 
 
 def duplicate_remover(df_duplicate):
