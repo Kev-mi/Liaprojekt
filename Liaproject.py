@@ -90,6 +90,7 @@ def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_f
     e = df_f[df_f['Price'].between(Price_filter[0], Price_filter[1])]
     city_f = city_filter
     st.write(city_f)
+    st.write(e)
     start_date = year_filter + "-01-01"
     end_date = year_filter2 + "-12-31"
     mask = (df_f["Date"] >= start_date) & (df_f["Date"] <= end_date)
