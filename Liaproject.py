@@ -88,7 +88,7 @@ def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_f
     c = df_f[df_f['Height'].between(Height_filter[0], Height_filter[1])]
     d = df_f[df_f['Width'].between(Width_filter[0], Width_filter[1])]
     e = df_f[df_f['Price'].between(Price_filter[0], Price_filter[1])]
-    f = df_f[df_f['cities'].str.match('city_filter')]
+    f = df_f[df_f['cities'].str.match(city_filter)]
     st.write(f)
     start_date = year_filter + "-01-01"
     end_date = year_filter2 + "-12-31"
