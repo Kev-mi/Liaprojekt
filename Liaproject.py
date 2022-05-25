@@ -83,11 +83,13 @@ def fan_number_calc(df_for_calc,room_length, room_width):
     df_for_calc['Number of fans along along length'] = df_for_calc['Number of fans along along length'].div(df_for_calc['Fan Diameter (coverage)'].values,axis=0).div(float(0.63829)).apply(np.floor)
     st.write(df_for_calc.astype(int))
 
-def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_filter, year_filter, year_filter2):
+def df_filter_function(df_f, Length_filter, Height_filter, Width_filter, Price_filter, year_filter, year_filter2, city_filter):
     b = df_f[df_f['Length'].between(Length_filter[0], Length_filter[1])]
     c = df_f[df_f['Height'].between(Height_filter[0], Height_filter[1])]
     d = df_f[df_f['Width'].between(Width_filter[0], Width_filter[1])]
     e = df_f[df_f['Price'].between(Price_filter[0], Price_filter[1])]
+    city_f = city_filter
+    st.write(city_f)
     start_date = year_filter + "-01-01"
     end_date = year_filter2 + "-12-31"
     mask = (df_f["Date"] >= start_date) & (df_f["Date"] <= end_date)
@@ -194,7 +196,7 @@ def result_menu(df):
     selected_year = st.sidebar.selectbox("Select year lower bound", sorted(year_list))
     selected_year_2 = st.sidebar.selectbox("Select year upper bound", sorted(year_list), index=len(set(year_list))-1)
     df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
-    df = df_filter_function(df, Length_slider, Height_slider, Width_slider, Price_slider, selected_year, selected_year_2)
+    df = df_filter_function(df, Length_slider, Height_slider, Width_slider, Price_slider, selected_year, selected_year_2, city_1 + "-" + city_2)
     df['Date'] = pd.to_datetime(df['Date'])
     df["Date"] = df["Date"].dt.date
     st.write(df)
